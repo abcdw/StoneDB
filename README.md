@@ -14,7 +14,7 @@ Created by Andrew Tropin, Konstantin Sozykin, Diana Davletshina.
 * keyword(__kid__, value)
 * author(__aid__, name)
 * venue(__vid__, name)
-* paper(__pid__, title, pages, year, venue_id)
+* paper(__pid__, title, year, venue_id)
 * writes(__paper_id, author_id__)
 * references(__from_id, to_id__)
 * contains(__paper_id, keyword_id__)
