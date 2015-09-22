@@ -18,3 +18,7 @@ Created by Andrew Tropin, Konstantin Sozykin, Diana Davletshina.
 * writes(__wid__, paper_id, author_id)
 * references(__rid__, from_id, to_id)
 * contains(__cid__,paper_id, keyword_id)
+### Description
+Our model of project data base consist 7 relationships.
+
+### Ref
