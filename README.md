@@ -19,6 +19,7 @@ Our model of project data base consist 7 relationships, which are:
 * writes(__wid__, paper_id, author_id)
 * references(__rid__, from_id, to_id)
 * contains(__cid__,paper_id, keyword_id)
+
 Data for this database was taked from aminer.org[1]. This data set can be used for many research purpose. Also little python3 script[2] was implemented for parsing this data set to psql database.
 
 ### Ref
