@@ -10,11 +10,18 @@ Created by Andrew Tropin, Konstantin Sozykin, Diana Davletshina.
 ### ER-diagram
 ![ER-diagram](https://raw.githubusercontent.com/abcdw/StoneDB/master/report/pics/er_diag.jpg)
 
-### Relations
+### Description
+Our model of project data base consist 7 relationships, which are:
 * keyword(__kid__, value)
 * author(__aid__, name)
 * venue(__vid__, name)
 * paper(__pid__, title, year, venue_id)
-* writes(__paper_id, author_id__)
-* references(__from_id, to_id__)
-* contains(__paper_id, keyword_id__)
+* writes(__wid__, paper_id, author_id)
+* references(__rid__, from_id, to_id)
+* contains(__cid__,paper_id, keyword_id)
+
+Data for this database was taked from aminer.org[1]. This data set can be used for many research purpose. Also little python3 script[2] was implemented for parsing this data set to psql database.
+
+### Ref
+1. https://aminer.org/billboard/citation
+2. link to py script
