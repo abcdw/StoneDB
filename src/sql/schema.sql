@@ -38,7 +38,7 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 175 (class 1259 OID 57379)
--- Name: author; Type: TABLE; Schema: public; Owner: user; Tablespace: 
+-- Name: author; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE author (
@@ -47,11 +47,11 @@ CREATE TABLE author (
 );
 
 
-ALTER TABLE author OWNER TO "user";
+ALTER TABLE author OWNER TO "postgres";
 
 --
 -- TOC entry 178 (class 1259 OID 57397)
--- Name: contains; Type: TABLE; Schema: public; Owner: user; Tablespace: 
+-- Name: contains; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE contains (
@@ -61,11 +61,11 @@ CREATE TABLE contains (
 );
 
 
-ALTER TABLE contains OWNER TO "user";
+ALTER TABLE contains OWNER TO "postgres";
 
 --
 -- TOC entry 173 (class 1259 OID 57363)
--- Name: keyword; Type: TABLE; Schema: public; Owner: user; Tablespace: 
+-- Name: keyword; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE keyword (
@@ -74,11 +74,11 @@ CREATE TABLE keyword (
 );
 
 
-ALTER TABLE keyword OWNER TO "user";
+ALTER TABLE keyword OWNER TO "postgres";
 
 --
 -- TOC entry 172 (class 1259 OID 57355)
--- Name: paper; Type: TABLE; Schema: public; Owner: user; Tablespace: 
+-- Name: paper; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE paper (
@@ -89,25 +89,25 @@ CREATE TABLE paper (
 );
 
 
-ALTER TABLE paper OWNER TO "user";
+ALTER TABLE paper OWNER TO "postgres";
 
 --
 -- TOC entry 176 (class 1259 OID 57387)
--- Name: references; Type: TABLE; Schema: public; Owner: user; Tablespace: 
+-- Name: refs; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE "references" (
+CREATE TABLE refs (
     rid integer NOT NULL,
     from_id integer,
     to_id integer
 );
 
 
-ALTER TABLE "references" OWNER TO "user";
+ALTER TABLE refs OWNER TO "postgres";
 
 --
 -- TOC entry 174 (class 1259 OID 57371)
--- Name: venue; Type: TABLE; Schema: public; Owner: user; Tablespace: 
+-- Name: venue; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE venue (
@@ -116,11 +116,11 @@ CREATE TABLE venue (
 );
 
 
-ALTER TABLE venue OWNER TO "user";
+ALTER TABLE venue OWNER TO "postgres";
 
 --
 -- TOC entry 177 (class 1259 OID 57392)
--- Name: writes; Type: TABLE; Schema: public; Owner: user; Tablespace: 
+-- Name: writes; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE writes (
@@ -130,12 +130,12 @@ CREATE TABLE writes (
 );
 
 
-ALTER TABLE writes OWNER TO "user";
+ALTER TABLE writes OWNER TO "postgres";
 
 --
 -- TOC entry 2033 (class 0 OID 57379)
 -- Dependencies: 175
--- Data for Name: author; Type: TABLE DATA; Schema: public; Owner: user
+-- Data for Name: author; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY author (aid, name) FROM stdin;
@@ -145,7 +145,7 @@ COPY author (aid, name) FROM stdin;
 --
 -- TOC entry 2036 (class 0 OID 57397)
 -- Dependencies: 178
--- Data for Name: contains; Type: TABLE DATA; Schema: public; Owner: user
+-- Data for Name: contains; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY contains (cid, paper_id, keyword_id) FROM stdin;
@@ -155,7 +155,7 @@ COPY contains (cid, paper_id, keyword_id) FROM stdin;
 --
 -- TOC entry 2031 (class 0 OID 57363)
 -- Dependencies: 173
--- Data for Name: keyword; Type: TABLE DATA; Schema: public; Owner: user
+-- Data for Name: keyword; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY keyword (kid, value) FROM stdin;
@@ -165,7 +165,7 @@ COPY keyword (kid, value) FROM stdin;
 --
 -- TOC entry 2030 (class 0 OID 57355)
 -- Dependencies: 172
--- Data for Name: paper; Type: TABLE DATA; Schema: public; Owner: user
+-- Data for Name: paper; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY paper (pid, title, year, venue_id) FROM stdin;
@@ -175,17 +175,17 @@ COPY paper (pid, title, year, venue_id) FROM stdin;
 --
 -- TOC entry 2034 (class 0 OID 57387)
 -- Dependencies: 176
--- Data for Name: references; Type: TABLE DATA; Schema: public; Owner: user
+-- Data for Name: refs; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY "references" (rid, from_id, to_id) FROM stdin;
+COPY refs (rid, from_id, to_id) FROM stdin;
 \.
 
 
 --
 -- TOC entry 2032 (class 0 OID 57371)
 -- Dependencies: 174
--- Data for Name: venue; Type: TABLE DATA; Schema: public; Owner: user
+-- Data for Name: venue; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY venue (vid, name) FROM stdin;
@@ -195,7 +195,7 @@ COPY venue (vid, name) FROM stdin;
 --
 -- TOC entry 2035 (class 0 OID 57392)
 -- Dependencies: 177
--- Data for Name: writes; Type: TABLE DATA; Schema: public; Owner: user
+-- Data for Name: writes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY writes (wid, paper_id, author_id) FROM stdin;
@@ -204,7 +204,7 @@ COPY writes (wid, paper_id, author_id) FROM stdin;
 
 --
 -- TOC entry 1914 (class 2606 OID 57386)
--- Name: aid; Type: CONSTRAINT; Schema: public; Owner: user; Tablespace: 
+-- Name: aid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY author
@@ -213,7 +213,7 @@ ALTER TABLE ONLY author
 
 --
 -- TOC entry 1920 (class 2606 OID 57401)
--- Name: cid; Type: CONSTRAINT; Schema: public; Owner: user; Tablespace: 
+-- Name: cid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY contains
@@ -222,7 +222,7 @@ ALTER TABLE ONLY contains
 
 --
 -- TOC entry 1910 (class 2606 OID 57370)
--- Name: kid; Type: CONSTRAINT; Schema: public; Owner: user; Tablespace: 
+-- Name: kid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY keyword
@@ -231,7 +231,7 @@ ALTER TABLE ONLY keyword
 
 --
 -- TOC entry 1908 (class 2606 OID 57362)
--- Name: pid; Type: CONSTRAINT; Schema: public; Owner: user; Tablespace: 
+-- Name: pid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY paper
@@ -240,16 +240,16 @@ ALTER TABLE ONLY paper
 
 --
 -- TOC entry 1916 (class 2606 OID 57391)
--- Name: rid; Type: CONSTRAINT; Schema: public; Owner: user; Tablespace: 
+-- Name: rid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY "references"
+ALTER TABLE ONLY refs
     ADD CONSTRAINT rid PRIMARY KEY (rid);
 
 
 --
 -- TOC entry 1912 (class 2606 OID 57378)
--- Name: vid; Type: CONSTRAINT; Schema: public; Owner: user; Tablespace: 
+-- Name: vid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY venue
@@ -258,7 +258,7 @@ ALTER TABLE ONLY venue
 
 --
 -- TOC entry 1918 (class 2606 OID 57396)
--- Name: wid; Type: CONSTRAINT; Schema: public; Owner: user; Tablespace: 
+-- Name: wid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY writes
@@ -268,12 +268,12 @@ ALTER TABLE ONLY writes
 --
 -- TOC entry 2043 (class 0 OID 0)
 -- Dependencies: 5
--- Name: public; Type: ACL; Schema: -; Owner: user
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM "user";
-GRANT ALL ON SCHEMA public TO "user";
+REVOKE ALL ON SCHEMA public FROM "postgres";
+GRANT ALL ON SCHEMA public TO "postgres";
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
