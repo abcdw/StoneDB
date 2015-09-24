@@ -22,6 +22,8 @@ class Paper:
         if self.abstract:
             tmp_abstract = self.abstract.replace(',', '').replace('.', '')
             not_empty_words = filter(None, tmp_abstract.split(' '))
+            if len(not_empty_words) > 7:
+                not_empty_words = not_empty_words[0:5]
             self.keywords = map(lambda x: x.lower(), not_empty_words)
 
     def update(self, line):
@@ -38,7 +40,8 @@ class Paper:
             self.index = line[2:]
         if line.startswith('#%'):
             if line[2:] != '':
-                self.references.append(line[2:])
+                if len(self.references) < 3:
+                    self.references.append(line[2:])
         if line.startswith('#!'):
             abstract = line[2:]
             if abstract == '':
@@ -199,11 +202,15 @@ def read_dataset():
     with DB() as db:
         with open(data_file) as f:
             i = 0
+            papers_number = 0
             p = Paper()
 
             for line in f:
                 i = i + 1
-                if i > 3000:
+                if i % 3000 == 0:
+                    db.connection.commit()
+                    print papers_number
+                if i > 300000:
                     break
                 p.update(line)
 
@@ -211,6 +218,7 @@ def read_dataset():
                     #  if p.abstract:
                     #  p.printme()
                     db.insert_paper(p)
+                    papers_number = papers_number + 1
                     p = Paper()
 
 
