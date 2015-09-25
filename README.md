@@ -22,6 +22,10 @@ Our model of project data base consist 7 relationships, which are:
 
 Data for this database was taked from aminer.org[1]. This data set can be used for many research purpose. Also little python3 script[2] was implemented for parsing this data set to psql database.
 
-### Ref
+
+
+### References
 1. https://aminer.org/billboard/citation
-2. link to py script
+2. https://github.com/abcdw/StoneDB/blob/master/src/utils/upload_data.py
+3. link to pyton sql queries
+
