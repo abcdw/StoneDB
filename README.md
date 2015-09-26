@@ -63,5 +63,4 @@ Data for this database was taked from aminer.org[1]. This data set can be used f
 ### References
 1. https://aminer.org/billboard/citation
 2. https://github.com/abcdw/StoneDB/blob/master/src/utils/upload_data.py
-3. link to pyton sql queries
-
+3. https://github.com/abcdw/StoneDB/blob/master/src/psql_py_sripts.py
