@@ -7,7 +7,7 @@ Created by:
 
 Andrew Tropin (andrewtropin@gmail.com),
 
-Konstantin Sozykin (gogolgrind@gmail.com,gogolgrind@yandex,ru),
+Konstantin Sozykin (gogolgrind@gmail.com, gogolgrind@yandex.ru),
 
 Diana Davletshina(d.davletshina@innopolis.ru).
 
