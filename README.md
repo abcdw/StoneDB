@@ -32,7 +32,7 @@ Our model of project data base consist 7 relationships, which are:
 Bold font is used to determine primary keys. 
 
 To determine authors of articles we have Writes entity, which contains paper id and author id as foreign keys.
-An article can have references and keywords. We keep keywords in the entity Keyword. To know which keywords article contains we have an entity Contains with attributes - foreign keys: paper id and keyword id. References are organized in an entity Refs. In Refs the atribute 'from id' is a foreign key to article id which has the reference,  the atrribute 'to id' is  a foreign key to article id which is a reference itself.
+An article can have references and keywords. We keep keywords in the entity Keyword. To know which keywords article contains we have an entity Contains with attributes - foreign keys: paper id and keyword id. References are organized in an entity Refs which is actually a weak entity. In Refs the atribute 'from id' is a foreign key to article id which has the reference,  the atrribute 'to id' is  a foreign key to article id which is a reference itself.
 
 
 
@@ -45,6 +45,9 @@ INSERT INTO paper VALUES ...
 DELETE FROM paper WHERE pid = ...
 UPDATE paper SET title = '...' 
 ```
+
+It is more efficient and convenient to insert data about publication using python script as we did. While adding data to paper table we can automatically create necessary tuples in keyword and references tables.
+
 2. Search for publications based on author name:
 ```
 SELECT * 
@@ -93,6 +96,10 @@ SELECT p.pid, COUNT(r.to_id)
 FROM paper AS p, refs AS r 
 WHERE p.pid = r.to_id GROUP BY p.pid ORDER BY COUNT(r.to_id) DESC
 ```
+Paper sorting based on actuality:
+```
+SELECT * from paper ORDER BY year
+```
 Paper sorting based on count of references:
 ```
 SELECT p.pid, COUNT(r.from_id) 
@@ -100,10 +107,7 @@ FROM paper AS p, refs AS r
 WHERE p.pid = r.from_id GROUP BY p.pid 
 ORDER BY COUNT(r.from_id) DESC
 ```
-Paper sorting based on relevance:
-```
-SELECT * from paper ORDER BY year
-```
+
 
 Data for this database was taked from aminer.org[1]. This data set can be used for many research purpose. Also little python3 script[2] was implemented for parsing this data set to psql database.
 
