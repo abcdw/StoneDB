@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StoneDB Frontend Alpha</title>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://raw.githubusercontent.com/omkarkhair/jsonTable/master/jsonTable.js"></script>
+
+<style type="text/css">
+    .bs-example{
+    	margin: 20px;
+    }
+</style>
+
+</head>
+<body>
+ <div class="container">
+    <table class="table table-bordered" id="table">
+    </table>
+ </div>
+<script type="text/javascript">
+    var url = 'https://api.github.com/users/mralexgray/repos';
+    //var url = 'data1.json'
+    var resp = $.getJSON(url,function(data) {
+        var col = []
+        // generate headers of table
+        $.each(data[0],function(key,val) {
+            col.push(key); 
+        });
+        var options = {
+            source: data,
+            rowClass: "classy",
+            callback: function(){
+                ;;
+            }
+        };
+        $("#table").jsonTable({
+            head : col,
+            json : col
+        });
+        $("#table").jsonTableUpdate(options); 
+    });
+</script>
+</body>
+</html>                                		
