@@ -18,11 +18,11 @@
 </head>
 <body>
  <div class="container">
-    <table class="table table-bordered" id="table">
+    <table class="table table-bordered table-striped" id="table">
     </table>
  </div>
 <script type="text/javascript">
-    var url = 'https://api.github.com/users/mralexgray/repos';
+    var url = '/articles';
     //var url = 'data1.json'
     var resp = $.getJSON(url,function(data) {
         var col = []
