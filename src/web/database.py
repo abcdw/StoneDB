@@ -3,7 +3,7 @@ import psycopg2
 class DBMS:
 
     def __init__(self, dbname, user, passw, server):
-        self.dbmane = dbname
+        self.dbname = dbname
         self.user = user
         self.passw = passw
         self.server = server
