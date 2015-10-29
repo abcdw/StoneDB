@@ -9,6 +9,7 @@ from database import DBMS
 import json
 
 app = Flask(__name__)
+db = DBMS('stoneDB', 'user', '', 'localhost')
 
 
 @app.route("/")
@@ -19,18 +20,11 @@ def hello(name=None):
     return "Hello World!"
 
 
-
-
 @app.route("/articles")
-@app.route("/articles/<q>")
 def get_articles(range=None):
     # return json response
     #  articles = range(0, 10)
-    #  print 'ok'
     q = 'test'
-    # print 'ok'
-    db = DBMS('stoneDB', 'postgres', 'postgres', 'localhost')
-    #print 'ok'
     query = request.args.get('q', 'test')
     rows = db.search_by_title(query)
     result = []
@@ -38,7 +32,7 @@ def get_articles(range=None):
         rrow = {'id': row[0],
                 'title': row[1],
                 'year': row[2],
-                # 'venue_id': row[3]
+                #'venue_id': row[3]
                 }
         result.append(rrow)
     return json.dumps(result)
@@ -47,13 +41,42 @@ def get_articles(range=None):
 @app.route("/create_article", methods=['GET', 'POST'])
 def create_article():
     if request.method == 'POST':
-        print request.data
+        form = request.form
+        print form
+        db.insert_to_paper(form['text_title'], form['text_year'], form['text_vid'])
         print 'ok'
         # get some values from request.form
         return 'Your article was added'
         # do some magic stuff
     if request.method == 'GET':
         return render_template('create_article.html')
+
+
+@app.route("/update_article", methods=['GET', 'POST'])
+def update_article():
+    url = request.full_path
+    id = request.args.get('id')
+    print "ok11"
+    print dir(request)
+    values = db.select_by_id(id)
+    if request.method == 'POST':
+        print 'ok1'
+        form = request.form
+        print form
+        db.update_paper(id, form['text_title'], form['text_year'], form['text_vid'])
+        print 'ok'
+        # get some values from request.form
+        return 'Your article was updated'
+        # do some magic stuff
+    if request.method == 'GET':
+        print values
+        title = values[0][1]
+        year = values[0][2]
+        vid = values[0][3]
+
+        return render_template('update_article.html', url=url, title=title, year=year, vid=vid)
+
+
 
 def check_auth(username, password):
     """This function is called to check if a username /
@@ -65,9 +88,9 @@ def check_auth(username, password):
 def authenticate():
     """Sends a 401 response that enables basic auth"""
     return Response(
-    'Could not verify your access level for that URL.\n'
-    'You have to login with proper credentials', 401,
-    {'WWW-Authenticate': 'Basic realm="Login Required"'})
+        'Could not verify your access level for that URL.\n'
+        'You have to login with proper credentials', 401,
+        {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
 
 def requires_auth(f):
@@ -77,6 +100,7 @@ def requires_auth(f):
         if not auth or not check_auth(auth.username, auth.password):
             return authenticate()
         return f(*args, **kwargs)
+
     return decorated
 
 

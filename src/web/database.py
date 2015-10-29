@@ -62,6 +62,10 @@ class DBMS:
         q = "SELECT * from paper ORDER BY year"
         return self.do_query(q)
 
+    def select_by_id(self, id):
+        q = "SELECT * from paper WHERE pid=" + id
+        return self.do_query(q)
+
     def get_max_id(self):
         q = "SELECT MAX(pid) FROM paper"
         return self.do_query(q)[0][0]
