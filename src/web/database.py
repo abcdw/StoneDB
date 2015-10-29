@@ -82,6 +82,21 @@ class DBMS:
         conn.commit()
         conn.close()
 
+    def update_paper(self, pid, title, year, vid): # pid is current value
+        query = "UPDATE paper SET title = '" + title + "', year = '" + year + "', venue_id = '" + vid + "' WHERE pid = " + pid
+        print query
+        try:
+            conn = psycopg2.connect("dbname=" + self.dbname + " user=" + self.user + " host= " + self.server  + " password=" + self.passw)
+        except:
+            print("Can't connect to " + self.dbname)
+        cur = conn.cursor()
+        try:
+            cur.execute(query)
+        except:
+            print("Can't execute")
+        conn.commit()
+        conn.close()
+
     def insert_values(self, table_name,values):
         query = "INSERT INTO " + table_name + " VALUES " + values
         try:
@@ -105,7 +120,6 @@ class DBMS:
         cur = conn.cursor()
         try:
             cur.execute(query)
-            ##print("Can execute")
         except:
             print("Can't execute")
         conn.commit()
