@@ -44,7 +44,6 @@
     $("#btn_sumbit").click(function() {
         var q =  '?q=' + $("#text_q").val(); 
         var url = '/articles' + q;
-        //var url = 'data1.json'
         var resp = $.getJSON(url,function(data) {
             var col = []
             // generate headers of table
