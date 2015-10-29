@@ -30,6 +30,7 @@ def get_articles(range=None):
     q = 'test'
     # print 'ok'
     db = DBMS('stoneDB', 'postgres', 'postgres', 'localhost')
+    #print 'ok'
     query = request.args.get('q', 'test')
     rows = db.search_by_title(query)
     result = []
