@@ -46,13 +46,13 @@ def get_articles(range=None):
 @app.route("/create_article", methods=['GET', 'POST'])
 def create_article():
     if request.method == 'POST':
-        print request.form
+        print request.data
+        print 'ok'
         # get some values from request.form
         return 'Your article was added'
         # do some magic stuff
     if request.method == 'GET':
         return render_template('create_article.html')
-
 
 def check_auth(username, password):
     """This function is called to check if a username /
