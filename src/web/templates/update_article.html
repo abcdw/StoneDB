@@ -16,9 +16,9 @@
             <label class="control-label col-sm-2" for="q">Update record:</label>
                 <div class="col-sm-10">
                     <FORM action="{{url}}" method="post">
-                        <input type="text" class="form-control"   id="text_title" placeholder="Title" value="{{title}}">
-                        <input type="text" class="form-control"   id="text_year"  placeholder="Year" value="{{year}}">
-                        <input type="text" class="form-control"   id="text_vid"   placeholder="Venue ID" value="{{vid}}">
+                        <input type="text" class="form-control"   name="text_title" placeholder="Title" value="{{title}}">
+                        <input type="text" class="form-control"   name="text_year"  placeholder="Year" value="{{year}}">
+                        <input type="text" class="form-control"   name="text_vid"   placeholder="Venue ID" value="{{vid}}">
                         <button class="btn btn-primary btn-block" id = "btn_sumbit"  type="sumbit">Submit</button>
                         <button class="btn btn-primary btn-block btn-danger" id = "btn_del"  type="sumbit">Delete</button>
                     </FORM>

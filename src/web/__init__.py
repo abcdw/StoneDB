@@ -56,15 +56,11 @@ def create_article():
 def update_article():
     url = request.full_path
     id = request.args.get('id')
-    print "ok11"
-    print dir(request)
     values = db.select_by_id(id)
     if request.method == 'POST':
-        print 'ok1'
         form = request.form
         print form
         db.update_paper(id, form['text_title'], form['text_year'], form['text_vid'])
-        print 'ok'
         # get some values from request.form
         return 'Your article was updated'
         # do some magic stuff
@@ -73,8 +69,15 @@ def update_article():
         title = values[0][1]
         year = values[0][2]
         vid = values[0][3]
-
         return render_template('update_article.html', url=url, title=title, year=year, vid=vid)
+
+@app.route("/delete_article", methods=['GET'])
+def delele_article():
+    id = request.args.get('id')
+    print dir(request)
+    if request.method == 'GET':
+        db.delete_paper_by_id(id)
+        return render_template('redirect.html', url=request.host_url)
 
 
 
