@@ -3,7 +3,6 @@ Simple single-file database engine
 
 This project related to [DMD](https://github.com/abcdw/inno/tree/master/DMD) course.
 
-
 Created by:
 
 Andrew Tropin (andrewtropin@gmail.com),
@@ -47,7 +46,7 @@ Run web-server with following command:
 python web/__init__.py
 ```
 
-Enjoy.
+Enjoy. Login/password: admin/admin 
 
 ## Description of source code.
 
