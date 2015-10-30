@@ -52,7 +52,7 @@
             });
             var options = {
                 source: data,
-                rowClass: "classy",
+                rowClass: "item",
                 callback: function(){
                     console.log(data.length);
                 }
@@ -62,6 +62,14 @@
                 json : col
             });
             $("#table").jsonTableUpdate(options);
+            $("tr.item").each(function() {
+                var row = (this);
+                var row_id = row.cells[0].innerHTML;
+                //console.log(row_id);
+                $(row).bind('click', function(){
+                    window.location = '/delete_article?id=' + row_id;
+                });
+            });
         }); 
     });
 </script>
