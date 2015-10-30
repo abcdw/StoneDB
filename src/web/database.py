@@ -62,6 +62,10 @@ class DBMS:
         q = "SELECT * from paper ORDER BY year"
         return self.do_query(q)
 
+    def select_by_id(self, id):
+        q = "SELECT * from paper WHERE pid=" + id
+        return self.do_query(q)
+
     def get_max_id(self):
         q = "SELECT MAX(pid) FROM paper"
         return self.do_query(q)[0][0]
@@ -69,6 +73,21 @@ class DBMS:
     def insert_to_paper(self, title, year, vid):
         pid = str(self.get_max_id() + 1)
         query = "INSERT INTO paper VALUES ('" + pid + "', '" + title + "', '" + year + "', '" + vid + "')"
+        print query
+        try:
+            conn = psycopg2.connect("dbname=" + self.dbname + " user=" + self.user + " host= " + self.server  + " password=" + self.passw)
+        except:
+            print("Can't connect to " + self.dbname)
+        cur = conn.cursor()
+        try:
+            cur.execute(query)
+        except:
+            print("Can't execute")
+        conn.commit()
+        conn.close()
+
+    def update_paper(self, pid, title, year, vid): # pid is current value
+        query = "UPDATE paper SET title = '" + title + "', year = '" + year + "', venue_id = '" + vid + "' WHERE pid = " + pid
         print query
         try:
             conn = psycopg2.connect("dbname=" + self.dbname + " user=" + self.user + " host= " + self.server  + " password=" + self.passw)
@@ -105,7 +124,6 @@ class DBMS:
         cur = conn.cursor()
         try:
             cur.execute(query)
-            ##print("Can execute")
         except:
             print("Can't execute")
         conn.commit()
