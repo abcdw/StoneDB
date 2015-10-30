@@ -17,9 +17,9 @@ Diana Davletshina(d.davletshina@innopolis.ru).
 During phase 2 web-application was created. Our web-interface allows users to following functionality:
 
 * Retrive articles, filter article list.
-* Create new article.
-* Modify existing article
-* Delete existing article
+* Create new article. (requires authentication)
+* Modify existing article. (requires authentication)
+* Delete existing article. (requires authentication)
 
 ## Deployment process
 

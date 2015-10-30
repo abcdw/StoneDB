@@ -9,7 +9,18 @@ from database import DBMS
 import json
 
 app = Flask(__name__)
-db = DBMS('stoneDB', 'user', '', 'localhost')
+db = DBMS('stonedb', 'postgres', 'postgres', 'localhost')
+
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+
+    return decorated
 
 
 @app.route("/")
@@ -39,6 +50,7 @@ def get_articles(range=None):
 
 
 @app.route("/create_article", methods=['GET', 'POST'])
+@requires_auth
 def create_article():
     if request.method == 'POST':
         form = request.form
@@ -53,6 +65,7 @@ def create_article():
 
 
 @app.route("/update_article", methods=['GET', 'POST'])
+@requires_auth
 def update_article():
     url = request.full_path
     id = request.args.get('id')
@@ -71,7 +84,9 @@ def update_article():
         vid = values[0][3]
         return render_template('update_article.html', url=url, title=title, year=year, vid=vid)
 
+
 @app.route("/delete_article", methods=['GET'])
+@requires_auth
 def delele_article():
     id = request.args.get('id')
     print dir(request)
@@ -95,16 +110,6 @@ def authenticate():
         'You have to login with proper credentials', 401,
         {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
-
-def requires_auth(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        auth = request.authorization
-        if not auth or not check_auth(auth.username, auth.password):
-            return authenticate()
-        return f(*args, **kwargs)
-
-    return decorated
 
 
 @app.route("/article")
