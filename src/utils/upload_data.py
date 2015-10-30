@@ -210,7 +210,7 @@ def read_dataset():
                 if i % 3000 == 0:
                     db.connection.commit()
                     print papers_number
-                if i > 300000:
+                if i > 1000007:
                     break
                 p.update(line)
 
