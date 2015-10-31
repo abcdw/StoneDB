@@ -3,7 +3,6 @@ Simple single-file database engine
 
 This project related to [DMD](https://github.com/abcdw/inno/tree/master/DMD) course.
 
-
 Created by:
 
 Andrew Tropin (andrewtropin@gmail.com),
@@ -11,6 +10,8 @@ Andrew Tropin (andrewtropin@gmail.com),
 Konstantin Sozykin (gogolgrind@gmail.com, gogolgrind@yandex.ru),
 
 Diana Davletshina(d.davletshina@innopolis.ru).
+
+## Database and Data Modeling Course Project. Phase  2.
 
 ## Abstract 
 
@@ -45,7 +46,7 @@ Run web-server with following command:
 python web/__init__.py
 ```
 
-Enjoy.
+Enjoy. Login/password: admin/admin 
 
 ## Description of source code.
 
@@ -59,8 +60,13 @@ Enjoy.
 * utils/wipe_db.sh - scripts that wipes database and init it with sql/schema.sql
 * sql/schema.sql - file that contains database schema.
 
-
-
+##Screenshot of User Web Interface.
+### Creating  new record in DB
+![Creating of new record in DB](https://raw.githubusercontent.com/abcdw/StoneDB/master/pics/create_article.png)
+### Updating new record in DB
+![Updating of new record in DB](https://raw.githubusercontent.com/abcdw/StoneDB/master/pics/update_article.png)
+### Table View
+![View of table](https://raw.githubusercontent.com/abcdw/StoneDB/master/pics/table.png)
 
 ## Database and Data Modeling Course Project. Phase  1.
 
@@ -167,3 +173,4 @@ Data for this database was taked from aminer.org[1]. This data set can be used f
 1. https://aminer.org/billboard/citation
 2. https://github.com/abcdw/StoneDB/blob/master/src/utils/upload_data.py
 3. https://github.com/abcdw/StoneDB/blob/master/src/psql_py_sripts.py
+4. Main repository link : https://github.com/abcdw/StoneDB
