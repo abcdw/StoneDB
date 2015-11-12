@@ -73,59 +73,17 @@ class DBMS:
     def insert_to_paper(self, title, year, vid):
         pid = str(self.get_max_id() + 1)
         query = "INSERT INTO paper VALUES ('" + pid + "', '" + title + "', '" + year + "', '" + vid + "')"
-        print query
-        try:
-            conn = psycopg2.connect("dbname=" + self.dbname + " user=" + self.user + " host= " + self.server  + " password=" + self.passw)
-        except:
-            print("Can't connect to " + self.dbname)
-        cur = conn.cursor()
-        try:
-            cur.execute(query)
-        except:
-            print("Can't execute")
-        conn.commit()
-        conn.close()
+        return self.do_query(query)
 
-    def update_paper(self, pid, title, year, vid): # pid is current value
+    def update_paper(self, pid, title, year, vid):
         query = "UPDATE paper SET title = '" + title + "', year = '" + year + "', venue_id = '" + vid + "' WHERE pid = " + pid
-        print query
-        try:
-            conn = psycopg2.connect("dbname=" + self.dbname + " user=" + self.user + " host= " + self.server  + " password=" + self.passw)
-        except:
-            print("Can't connect to " + self.dbname)
-        cur = conn.cursor()
-        try:
-            cur.execute(query)
-        except:
-            print("Can't execute")
-        conn.commit()
-        conn.close()
+        return self.do_query(query)
 
-    def insert_values(self, table_name,values):
+    def insert_values(self, table_name, values):
         query = "INSERT INTO " + table_name + " VALUES " + values
-        try:
-            conn = psycopg2.connect("dbname=" + self.dbname + " user=" + self.user +" host= " + self.server  + " password=" + self.passw)
-        except:
-            print("Can't conntect to " + self.dbname)
-        cur = conn.cursor()
-        try:
-            cur.execute(query)
-        except:
-            print("Can't execute")
-        conn.commit()
-        conn.close()
+        return self.do_query(query)
 
     def delete_paper_by_id(self, pid):
         query = "DELETE FROM paper WHERE pid = " + pid
-        try:
-            conn = psycopg2.connect("dbname=" + self.dbname + " user=" + self.user +" host= " + self.server  + " password=" + self.passw)
-        except:
-            print("Can't conntect to " + self.dbname)
-        cur = conn.cursor()
-        try:
-            cur.execute(query)
-        except:
-            print("Can't execute")
-        conn.commit()
-        conn.close()
+        return self.do_query(query)
 
