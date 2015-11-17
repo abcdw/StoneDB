@@ -1,5 +1,26 @@
 
 import psycopg2
+
+
+class Paper:
+    def __init__(self):
+        self.title = ""
+        self.year = ""
+        self.id = ""
+        self.vid = ""
+
+    def update(self, line):
+        line = line.strip()
+        if line.startswith('#*'):
+            self.title = line[2:]
+        if line.startswith('#t'):
+            self.year = line[2:]
+        if line.startswith('#c'):
+            self.vid = line[2:]
+        if line.startswith('#i'):
+            self.id = line[2:]
+
+
 class DBMS:
 
     def __init__(self, dbname, user, passw, server):
@@ -7,6 +28,22 @@ class DBMS:
         self.user = user
         self.passw = passw
         self.server = server
+        self.papers = []
+        data_file = 'publications_new.txt'
+
+        with open(data_file) as f:
+            i = 0
+            p = Paper()
+
+            for line in f:
+                i = i + 1
+                if i > 100000:
+                    break
+                p.update(line)
+
+                if line.strip() == '':
+                    self.papers.append(p)
+                    p = Paper()
 
     def do_query(self, query):
         try:
@@ -27,8 +64,9 @@ class DBMS:
         return self.do_query(q)
 
     def search_by_title(self, pattern):
-        q = "SELECT * FROM paper WHERE title LIKE '%"+ pattern +"%'"
-        return self.do_query(q)
+        #q = "SELECT * FROM paper WHERE title LIKE '%"+ pattern +"%'"
+        result = filter(lambda x: x.title.find(pattern) != -1, self.papers)
+        return result
 
     def search_by_author(self, pattern):
         q = "SELECT * FROM paper AS p, author AS a WHERE p.pid = a.aid AND a.name = '" + pattern + "'"
@@ -71,19 +109,41 @@ class DBMS:
         return self.do_query(q)[0][0]
 
     def insert_to_paper(self, title, year, vid):
-        pid = str(self.get_max_id() + 1)
-        query = "INSERT INTO paper VALUES ('" + pid + "', '" + title + "', '" + year + "', '" + vid + "')"
-        return self.do_query(query)
+        pid = int(self.papers[-1].id) + 1
+        #query = "INSERT INTO paper VALUES ('" + pid + "', '" + title + "', '" + year + "', '" + vid + "')"
+        p = Paper()
+        p.id = pid
+        p.title = title
+        p.year = year
+        p.vid = vid
+        self.papers.append(p)
+        return p
 
     def update_paper(self, pid, title, year, vid):
-        query = "UPDATE paper SET title = '" + title + "', year = '" + year + "', venue_id = '" + vid + "' WHERE pid = " + pid
-        return self.do_query(query)
+        #query = "UPDATE paper SET title = '" + title + "', year = '" + year + "', venue_id = '" + vid + "' WHERE pid = " + pid
+        p = filter(lambda x: x.id == str(pid), self.papers)[0]
+        p.title = title
+        p.year = year
+        p.vid = vid
 
     def insert_values(self, table_name, values):
         query = "INSERT INTO " + table_name + " VALUES " + values
         return self.do_query(query)
 
     def delete_paper_by_id(self, pid):
-        query = "DELETE FROM paper WHERE pid = " + pid
-        return self.do_query(query)
+        #query = "DELETE FROM paper WHERE pid = " + pid
+        papers = filter(lambda x: x.id == str(pid), self.papers)
+        if papers:
+            p = papers[0]
+            self.papers.remove(p)
 
+if __name__ == '__main__':
+    db = DBMS("wqer", "qwer", "wqer", "qwer")
+    db.delete_paper_by_id(1)
+    for paper in db.papers[:10]:
+        print paper.id, paper.title
+    db.insert_to_paper("wwwwwww", "2222", "121212")
+    db.update_paper(10, "qq", "1111", "0000")
+    print db.papers[-1].title
+    for paper in db.papers[:10]:
+        print paper.id, paper.title
