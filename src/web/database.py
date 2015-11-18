@@ -1,3 +1,4 @@
+# coding: utf-8
 import psycopg2
 import btree
 
@@ -64,9 +65,11 @@ class DBMS:
         return self.do_query(q)
 
     def search_by_title(self, pattern):
-        #q = "SELECT * FROM paper WHERE title LIKE '%"+ pattern +"%'"
-        result = filter(lambda x: x.title.find(pattern) != -1, self.papers)
+        result = filter(lambda x: x.title.decode('utf-8').encode('utf-8').find(pattern.encode('utf-8')) != -1, self.papers)
         return result
+
+    def sort_by_title(self, papers):
+        return sorted(papers, key=lambda x: x.title)
 
     def search_by_author(self, pattern):
         q = "SELECT * FROM paper AS p, author AS a WHERE p.pid = a.aid AND a.name = '" + pattern + "'"
@@ -152,12 +155,13 @@ class DBMS:
 
 if __name__ == '__main__':
     db = DBMS("wqer", "qwer", "wqer", "qwer")
-    db.delete_paper_by_id(1)
-    for paper in db.papers[:10]:
-        print paper.id, paper.title
-    db.insert_to_paper("wwwwwww", "2222", "121212")
-    db.update_paper(10, "qq", "1111", "0000")
-    print db.papers[-1].title
-    for paper in db.papers[:10]:
-        print paper.id, paper.title
-    db.write_index()
+    print db.sort_by_title(db.search_by_title("a"))
+    # db.delete_paper_by_id(1)
+    # for paper in db.papers[:10]:
+    #     print paper.id, paper.title
+    # db.insert_to_paper("wwwwwww", "2222", "121212")
+    # db.update_paper(10, "qq", "1111", "0000")
+    # print db.papers[-1].title
+    # for paper in db.papers[:10]:
+    #     print paper.id, paper.title
+    # db.write_index()

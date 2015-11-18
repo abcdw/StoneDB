@@ -37,12 +37,12 @@ def get_articles(range=None):
     #  articles = range(0, 10)
     q = 'test'
     query = request.args.get('q', 'test')
-    rows = db.search_by_title(query)
+    rows = db.sort_by_title(db.search_by_title(query))
     result = []
     for row in rows:
-        rrow = {'id': row[0],
-                'title': row[1],
-                'year': row[2],
+        rrow = {'id': row.id,
+                'title': row.title,
+                'year': row.year
                 #'venue_id': row[3]
                 }
         result.append(rrow)
