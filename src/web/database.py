@@ -1,6 +1,5 @@
-
 import psycopg2
-
+import btree
 
 class Paper:
     def __init__(self):
@@ -29,9 +28,10 @@ class DBMS:
         self.passw = passw
         self.server = server
         self.papers = []
-        data_file = 'publications_new.txt'
+        self.b_plus_tree = btree.BPlusTree(2)
+        self.data_file = 'publications_new.txt'
 
-        with open(data_file) as f:
+        with open(self.data_file) as f:
             i = 0
             p = Paper()
 
@@ -136,6 +136,19 @@ class DBMS:
         if papers:
             p = papers[0]
             self.papers.remove(p)
+    
+    def write_index(self):
+        last = 100000
+        for paper in self.papers[:last]:
+            tuple_ = [paper.id,paper.title,paper.year,paper.vid]
+            self.b_plus_tree.insert(paper.title,tuple_)
+        with open(self.data_file,"a+") as f:
+            for item in self.b_plus_tree.items():
+                key = str(item[0])
+                value = '-'.join(map(str,item[1]))
+                #print key,value,'\n'
+                f.write(key + ' ' + value + '\n')
+                
 
 if __name__ == '__main__':
     db = DBMS("wqer", "qwer", "wqer", "qwer")
@@ -147,3 +160,4 @@ if __name__ == '__main__':
     print db.papers[-1].title
     for paper in db.papers[:10]:
         print paper.id, paper.title
+    db.write_index()
