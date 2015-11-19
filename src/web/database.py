@@ -1,24 +1,60 @@
 # coding: utf-8
-import psycopg2
+# import psycopg2
 import btree
 
 class Paper:
     def __init__(self):
-        self.title = ""
-        self.year = ""
-        self.id = ""
-        self.vid = ""
+        self.data = {}
+        self.data['title'] = ''
+        self.data['year'] = ''
+        self.data['id'] = ''
+        self.data['vid'] = ''
+        self.data['author'] = ''
+        self.fields = []
 
     def update(self, line):
         line = line.strip()
         if line.startswith('#*'):
-            self.title = line[2:]
+            self.data['title'] = line[2:]
         if line.startswith('#t'):
-            self.year = line[2:]
+            self.data['year'] = line[2:]
         if line.startswith('#c'):
-            self.vid = line[2:]
+            self.data['vid'] = line[2:]
         if line.startswith('#i'):
-            self.id = line[2:]
+            self.data['id'] = line[2:]
+        if line.startswith('#@'):
+            self.data['author'] = line[2:]
+
+    def set_projection(self, *args):
+        self.fields = args
+
+    def get_tuple(self):
+        result = []
+        for arg in self.fields:
+            if arg in self.data.keys():
+                result.append(self.data[arg])
+        return tuple(result)
+
+
+    @property
+    def tuple(self):
+        return self.get_tuple()
+
+    @property
+    def title(self):
+        return self.data['title']
+
+    @property
+    def year(self):
+        return self.data['year']
+
+    @property
+    def id(self):
+        return self.data['id']
+
+    @property
+    def author(self):
+        return self.data['author']
 
 
 class DBMS:
@@ -31,6 +67,7 @@ class DBMS:
         self.papers = []
         self.b_plus_tree = btree.BPlusTree(2)
         self.data_file = 'publications_new.txt'
+        self.projection_fields = ()
 
         with open(self.data_file) as f:
             i = 0
@@ -45,6 +82,37 @@ class DBMS:
                 if line.strip() == '':
                     self.papers.append(p)
                     p = Paper()
+
+    def set_projection(self, *args):
+        self.projection_fields = args
+        for paper in self.papers:
+            paper.set_projection(*args)
+
+
+    def group_by_year(self, **kwargs):
+
+        years = set(map(lambda x: x.year, self.papers))
+        count = {}
+        for year in years:
+            count[year] = 0
+
+        if kwargs['func'] == 'count':
+            for paper in self.papers:
+                count[paper.year] = count[paper.year] + 1
+
+        for year in years:
+            yield (year, count[year])
+
+    def join_paper_author(self, *args, **kwargs):
+        authors_enum = enumerate(set(map(lambda x: x.author, self.papers)))
+        authors = {}
+        for author in authors_enum:
+            authors[author[1]] = author[0]
+
+        for paper in self.papers:
+            row = (paper.id, paper.title, authors[paper.author],
+                   authors[paper.author], paper.author)
+            yield row
 
     def do_query(self, query):
         try:
@@ -139,7 +207,7 @@ class DBMS:
         if papers:
             p = papers[0]
             self.papers.remove(p)
-    
+
     def write_index(self):
         last = 100000
         for paper in self.papers[:last]:
@@ -151,17 +219,27 @@ class DBMS:
                 value = '-'.join(map(str,item[1]))
                 #print key,value,'\n'
                 f.write(key + ' ' + value + '\n')
-                
+
 
 if __name__ == '__main__':
     db = DBMS("wqer", "qwer", "wqer", "qwer")
-    print db.sort_by_title(db.search_by_title("a"))
-    # db.delete_paper_by_id(1)
-    # for paper in db.papers[:10]:
-    #     print paper.id, paper.title
-    # db.insert_to_paper("wwwwwww", "2222", "121212")
-    # db.update_paper(10, "qq", "1111", "0000")
-    # print db.papers[-1].title
-    # for paper in db.papers[:10]:
-    #     print paper.id, paper.title
-    # db.write_index()
+    # db.set_projection('id', 'title', 'id')
+    # papers = db.sort_by_title(db.search_by_title("a"))
+    # for paper in papers:
+    #     print paper.tuple
+
+
+    # result = db.group_by_year(func='count') # example of cursor
+    # for obj in result:
+    #     print obj
+
+    for obj in db.join_paper_author(on='p.aid == a.id'):
+        print obj
+
+    # TODO: check frontend
+    # TODO: join
+    # TODO: group_by
+
+    # TODO: db.join_something()
+
+
