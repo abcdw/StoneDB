@@ -11,6 +11,19 @@ Konstantin Sozykin (gogolgrind@gmail.com, gogolgrind@yandex.ru),
 
 Diana Davletshina(d.davletshina@innopolis.ru).
 
+## Database and Data Modeling Course Project. Phase  3.
+
+## Abstract 
+During phase 3 we replaced part of backend by own implementation of DBMS with changed deleteion, insertion, updating operations. In addition we implemented following functions:
+
+1. projection
+2. scan (cursor)
+3. joining
+4. groping by
+5. Indexing using btree[5]
+
+However, from user's point of view our frontend has not been changed.
+
 ## Database and Data Modeling Course Project. Phase  2.
 
 ## Abstract 
@@ -174,3 +187,4 @@ Data for this database was taked from aminer.org[1]. This data set can be used f
 2. https://github.com/abcdw/StoneDB/blob/master/src/utils/upload_data.py
 3. https://github.com/abcdw/StoneDB/blob/master/src/psql_py_sripts.py
 4. Main repository link : https://github.com/abcdw/StoneDB
+5. https://gist.github.com/teepark/572734
