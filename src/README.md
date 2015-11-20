@@ -14,7 +14,7 @@ Diana Davletshina(d.davletshina@innopolis.ru).
 ## Database and Data Modeling Course Project. Phase  3.
 
 ## Abstract 
-During phase 3 we replaced part of backend by own implmentation of DBMS with changed deleteion, insertion, updating operations. In addition we implemented followng functions:
+During phase 3 we replaced part of backend by own implementation of DBMS with changed deleteion, insertion, updating operations. In addition we implemented following functions:
 
 1. projection
 2. scan (cursor)
