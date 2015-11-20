@@ -15,6 +15,7 @@ Diana Davletshina(d.davletshina@innopolis.ru).
 
 ## Abstract 
 During phase 3 we replaced part of backend by own implmentation of DBMS with changed deleteion, insertion, updating operations. In addition we implemented followng functions:
+
 1. projection
 2. scan (cursor)
 3. joining
