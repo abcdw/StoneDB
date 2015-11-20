@@ -21,7 +21,7 @@ During phase 3 we replaced part of backend by own implmentation of DBMS with cha
 4. groping by
 5. Indexing using btree[5]
 
-However, from user's point of view our frontend was not changed.
+However, from user's point of view our frontend has not been changed.
 
 ## Database and Data Modeling Course Project. Phase  2.
 
